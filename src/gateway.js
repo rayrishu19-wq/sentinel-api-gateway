@@ -8,6 +8,18 @@ const { isUsingMock } = require('./utils/redisClient');
 
 const app = express();
 
+// Response Time measurement middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+  const originalWriteHead = res.writeHead;
+  res.writeHead = function(...args) {
+    const duration = Date.now() - start;
+    res.setHeader('X-Response-Time', `${duration}ms`);
+    return originalWriteHead.apply(this, args);
+  };
+  next();
+});
+
 // Load Gateway configuration
 const configPath = path.join(__dirname, '../config/gateway.json');
 let config;
