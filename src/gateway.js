@@ -7,6 +7,15 @@ const { createProxy } = require('./middlewares/proxy');
 const { isUsingMock } = require('./utils/redisClient');
 
 const app = express();
+const crypto = require('crypto');
+
+// Correlation ID middleware
+app.use((req, res, next) => {
+  const reqId = req.headers['x-request-id'] || crypto.randomUUID();
+  req.id = reqId;
+  res.setHeader('X-Request-ID', reqId);
+  next();
+});
 
 // Load Gateway configuration
 const configPath = path.join(__dirname, '../config/gateway.json');
