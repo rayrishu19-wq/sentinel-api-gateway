@@ -1,0 +1,31 @@
+{
+  "name": "sentinel-api-gateway",
+  "version": "1.0.0",
+  "description": "Sentinel is a custom API Gateway, reverse proxy, caching, and rate limiting system using Node.js, Express, and Redis.",
+  "main": "src/gateway.js",
+  "scripts": {
+    "start": "node src/gateway.js",
+    "dev": "nodemon src/gateway.js",
+    "service:users": "node services/mock-users.js",
+    "service:products": "node services/mock-products.js"
+  },
+  "keywords": [
+    "api-gateway",
+    "rate-limiter",
+    "reverse-proxy",
+    "redis",
+    "caching",
+    "token-bucket",
+    "express"
+  ],
+  "author": "Rishu Ray",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-http-proxy": "^2.0.0",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

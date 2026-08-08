@@ -1,0 +1,24 @@
+{
+  "port": 5000,
+  "services": {
+    "users": {
+      "target": "http://localhost:5001",
+      "prefix": "/users",
+      "rateLimit": {
+        "limit": 10,
+        "windowMs": 60000
+      }
+    },
+    "products": {
+      "target": "http://localhost:5002",
+      "prefix": "/products",
+      "rateLimit": {
+        "limit": 5,
+        "windowMs": 60000
+      },
+      "cache": {
+        "ttlSec": 15
+      }
+    }
+  }
+}
