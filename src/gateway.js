@@ -29,6 +29,23 @@ app.use((req, res, next) => {
   next();
 });
 
+// Create logs directory if not exists
+const logDir = path.join(__dirname, '../logs');
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+
+// File logging middleware
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    const logLine = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl} -> HTTP ${res.statusCode}\n`;
+    fs.appendFile(path.join(logDir, 'access.log'), logLine, (err) => {
+      if (err) console.error('[File Logger] Error writing access log:', err);
+    });
+  });
+  next();
+});
+
 // Load Gateway configuration
 const configPath = path.join(__dirname, '../config/gateway.json');
 let config;
