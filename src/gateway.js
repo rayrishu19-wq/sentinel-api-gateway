@@ -5,6 +5,7 @@ const { createRateLimiter } = require('./middlewares/rateLimiter');
 const { checkCache } = require('./middlewares/cache');
 const { createProxy } = require('./middlewares/proxy');
 const { isUsingMock } = require('./utils/redisClient');
+const { validateConfig } = require('./utils/configValidator');
 
 const app = express();
 
@@ -14,6 +15,7 @@ let config;
 
 try {
   config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  validateConfig(config);
 } catch (err) {
   console.error('❌ Failed to load gateway.json configuration:', err);
   process.exit(1);
