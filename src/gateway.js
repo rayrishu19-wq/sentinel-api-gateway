@@ -18,6 +18,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Enable CORS middleware
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // Load Gateway configuration
 const configPath = path.join(__dirname, '../config/gateway.json');
 let config;
