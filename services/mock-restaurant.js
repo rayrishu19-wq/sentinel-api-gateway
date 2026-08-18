@@ -40,3 +40,23 @@ app.get('/menu', (req, res) => {
     status: 'open'
   });
 });
+
+// Get menu by category
+app.get('/menu/:category', (req, res) => {
+  const category = req.params.category;
+  if (menu[category]) {
+    res.json({
+      category: category,
+      items: menu[category]
+    });
+  } else {
+    res.status(404).json({
+      error: 'Category Not Found',
+      message: `Category '${category}' is not available. Try appetizers, mainCourses, desserts, or drinks.`
+    });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
+});
