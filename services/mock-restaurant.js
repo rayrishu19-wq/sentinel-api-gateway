@@ -74,6 +74,23 @@ app.get('/tables', (req, res) => {
   res.json({ tables });
 });
 
+// Create booking
+app.post('/bookings', (req, res) => {
+  const { tableId, customerName, partySize, time } = req.body;
+  if (!tableId || !customerName || !partySize || !time) {
+    return res.status(400).json({ error: 'Missing required booking fields' });
+  }
+  const booking = {
+    id: 'b' + (bookings.length + 1),
+    tableId,
+    customerName,
+    partySize,
+    time
+  };
+  bookings.push(booking);
+  res.status(201).json({ message: 'Booking created successfully', booking });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
