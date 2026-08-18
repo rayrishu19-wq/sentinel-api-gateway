@@ -18,7 +18,7 @@ const tables = [
   { id: 't5', number: 5, capacity: 6, occupied: false }
 ];
 const bookings = [];
-
+const orders = [];
 
 
 const menu = {
