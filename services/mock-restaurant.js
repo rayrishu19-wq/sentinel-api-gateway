@@ -168,6 +168,23 @@ app.put('/orders/:id/status', (req, res) => {
   }
 });
 
+// Add review
+app.post('/reviews', (req, res) => {
+  const { author, rating, comment } = req.body;
+  if (!author || typeof rating !== 'number' || rating < 1 || rating > 5) {
+    return res.status(400).json({ error: 'Invalid review fields. Rating must be 1 to 5.' });
+  }
+  const review = {
+    id: 'r' + (reviews.length + 1),
+    author,
+    rating,
+    comment,
+    date: new Date().toISOString()
+  };
+  reviews.push(review);
+  res.status(201).json({ message: 'Review submitted successfully', review });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
