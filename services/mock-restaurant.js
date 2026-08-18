@@ -69,6 +69,11 @@ app.get('/menu/:category', (req, res) => {
 });
 
 
+// Get tables
+app.get('/tables', (req, res) => {
+  res.json({ tables });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
