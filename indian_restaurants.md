@@ -56,3 +56,24 @@ Endpoints to submit and retrieve food orders.
 
 ### 6. POST `/restaurant/reviews` & GET `/restaurant/reviews`
 Endpoints to write customer reviews and query aggregated rating stats.
+
+### 7. GET `/gateway/metrics`
+Gateway endpoint returning tracking metrics (uptime, total requests, status codes distribution, average response times, and cache hits/misses ratio).
+
+**Example Response:**
+```json
+{
+  "uptimeSeconds": 12,
+  "totalRequests": 5,
+  "statusCodes": {
+    "2xx": 4,
+    "3xx": 0,
+    "4xx": 1,
+    "5xx": 0
+  },
+  "avgResponseTimeMs": 14.5,
+  "cacheHits": 2,
+  "cacheMisses": 3,
+  "cacheHitRatio": 0.4
+}
+```
