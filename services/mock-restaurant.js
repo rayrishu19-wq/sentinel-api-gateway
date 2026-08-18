@@ -21,6 +21,12 @@ const menu = {
     { id: 'm2', name: 'Dal Makhani', price: 11.99, description: 'Slow-cooked black lentils with cream and spices' },
     { id: 'm3', name: 'Paneer Butter Masala', price: 13.99, description: 'Cottage cheese in a spiced tomato-gravy' }
   ],
-  desserts: [],
-  drinks: []
+  desserts: [
+    { id: 'd1', name: 'Gulab Jamun (2pcs)', price: 3.99, description: 'Warm milk dumplings soaked in cardamom sugar syrup' },
+    { id: 'd2', name: 'Rasmalai (2pcs)', price: 4.99, description: 'Soft cheese patties in sweet, thickened milk' }
+  ],
+  drinks: [
+    { id: 'dr1', name: 'Mango Lassi', price: 3.49, description: 'Sweet yogurt drink blended with mango pulp' },
+    { id: 'dr2', name: 'Masala Chai', price: 2.49, description: 'Spiced Indian milk tea' }
+  ]
 };
