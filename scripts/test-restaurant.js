@@ -4,6 +4,13 @@ console.log('🧪 Starting Sentinel API Gateway - Restaurant Service Integration
 
 function makeRequest(options, postData = null) {
   return new Promise((resolve, reject) => {
+    let bodyStr = '';
+    if (postData) {
+      bodyStr = JSON.stringify(postData);
+      options.headers = options.headers || {};
+      options.headers['Content-Type'] = 'application/json';
+      options.headers['Content-Length'] = Buffer.byteLength(bodyStr);
+    }
     const req = http.request(options, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
@@ -13,7 +20,7 @@ function makeRequest(options, postData = null) {
     });
     req.on('error', (e) => { reject(e); });
     if (postData) {
-      req.write(JSON.stringify(postData));
+      req.write(bodyStr);
     }
     req.end();
   });
