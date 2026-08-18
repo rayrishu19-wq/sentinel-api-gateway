@@ -10,6 +10,11 @@ app.use((req, res, next) => {
   next();
 });
 
+const tables = [];
+const bookings = [];
+
+
+
 const menu = {
   appetizers: [
     { id: 'a1', name: 'Samosa (2pcs)', price: 4.99, description: 'Crispy pastry filled with spiced potatoes and peas' },
@@ -56,6 +61,8 @@ app.get('/menu/:category', (req, res) => {
     });
   }
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
