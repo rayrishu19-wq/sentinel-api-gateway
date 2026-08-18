@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { createRateLimiter } = require('./middlewares/rateLimiter');
+const { metricsMiddleware, getMetrics } = require('./middlewares/metrics');
 const { checkCache } = require('./middlewares/cache');
 const { createProxy } = require('./middlewares/proxy');
 const { isUsingMock } = require('./utils/redisClient');
@@ -123,6 +124,11 @@ Object.entries(config.services).forEach(([serviceName, serviceConfig]) => {
 
   // Mount the middleware pipeline on the configured prefix path
   app.use(prefix, ...pipeline);
+});
+
+// Gateway Metrics Endpoint
+app.get('/gateway/metrics', (req, res) => {
+  res.json(getMetrics());
 });
 
 // Global 404 handler for unmatched routes
