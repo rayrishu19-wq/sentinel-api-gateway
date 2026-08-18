@@ -80,6 +80,17 @@ app.post('/bookings', (req, res) => {
   if (!tableId || !customerName || !partySize || !time) {
     return res.status(400).json({ error: 'Missing required booking fields' });
   }
+  const table = tables.find(t => t.id === tableId);
+  if (!table) {
+    return res.status(404).json({ error: 'Table Not Found' });
+  }
+  if (partySize > table.capacity) {
+    return res.status(400).json({ error: 'Capacity Exceeded', message: `Table capacity is ${table.capacity}` });
+  }
+  const isAlreadyBooked = bookings.some(b => b.tableId === tableId && b.time === time);
+  if (isAlreadyBooked) {
+    return res.status(409).json({ error: 'Conflict', message: 'Table is already booked at this time' });
+  }
   const booking = {
     id: 'b' + (bookings.length + 1),
     tableId,
