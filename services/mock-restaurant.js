@@ -119,6 +119,26 @@ app.delete('/bookings/:id', (req, res) => {
   }
 });
 
+// Place order
+app.post('/orders', (req, res) => {
+  const { items, tableId } = req.body;
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({ error: 'Order must contain items' });
+  }
+  const orderId = 'o' + (orders.length + 1);
+  const total = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const order = {
+    id: orderId,
+    tableId,
+    items,
+    total: parseFloat(total.toFixed(2)),
+    status: 'Received',
+    createdAt: new Date().toISOString()
+  };
+  orders.push(order);
+  res.status(201).json({ message: 'Order placed successfully', order });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
