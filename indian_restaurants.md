@@ -44,3 +44,15 @@ Indian cuisine uses a wide array of aromatic spices that are well-known for thei
 | Cardamom | Elaichi | Sweet, Floral | Refreshes breath, rich in antioxidants |
 | Cloves | Laung | Sweet, Pungent | Antimicrobial, dental health |
 | Cinnamon | Dalchini | Sweet, Woody | Helps regulate blood sugar |
+
+### 3. GET `/restaurant/tables`
+Returns the list of dining tables and their capacity.
+
+### 4. GET `/restaurant/bookings` & POST `/restaurant/bookings`
+Endpoint to view and request table bookings. Validates table capacity and avoids double bookings.
+
+### 5. POST `/restaurant/orders` & GET `/restaurant/orders`
+Endpoints to submit and retrieve food orders.
+
+### 6. POST `/restaurant/reviews` & GET `/restaurant/reviews`
+Endpoints to write customer reviews and query aggregated rating stats.
