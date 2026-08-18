@@ -91,6 +91,11 @@ app.post('/bookings', (req, res) => {
   res.status(201).json({ message: 'Booking created successfully', booking });
 });
 
+// Get all bookings
+app.get('/bookings', (req, res) => {
+  res.json({ bookings });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
