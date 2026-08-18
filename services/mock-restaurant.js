@@ -139,6 +139,11 @@ app.post('/orders', (req, res) => {
   res.status(201).json({ message: 'Order placed successfully', order });
 });
 
+// Get all orders
+app.get('/orders', (req, res) => {
+  res.json({ orders });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
