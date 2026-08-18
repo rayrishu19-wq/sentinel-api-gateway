@@ -19,6 +19,17 @@
       "cache": {
         "ttlSec": 15
       }
+    },
+    "restaurant": {
+      "target": "http://localhost:5003",
+      "prefix": "/restaurant",
+      "rateLimit": {
+        "limit": 15,
+        "windowMs": 60000
+      },
+      "cache": {
+        "ttlSec": 10
+      }
     }
   }
 }
