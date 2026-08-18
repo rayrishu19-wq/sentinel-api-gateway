@@ -155,6 +155,19 @@ app.get('/orders/:id', (req, res) => {
   }
 });
 
+// Update order status
+app.put('/orders/:id/status', (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+  const order = orders.find(o => o.id === id);
+  if (order) {
+    order.status = status;
+    res.json({ message: `Order status updated to ${status}`, order });
+  } else {
+    res.status(404).json({ error: 'Order Not Found' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
