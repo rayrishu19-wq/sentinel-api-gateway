@@ -144,6 +144,17 @@ app.get('/orders', (req, res) => {
   res.json({ orders });
 });
 
+// Get order by id
+app.get('/orders/:id', (req, res) => {
+  const id = req.params.id;
+  const order = orders.find(o => o.id === id);
+  if (order) {
+    res.json({ order });
+  } else {
+    res.status(404).json({ error: 'Order Not Found' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
