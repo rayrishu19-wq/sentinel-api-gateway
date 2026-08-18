@@ -30,3 +30,13 @@ const menu = {
     { id: 'dr2', name: 'Masala Chai', price: 2.49, description: 'Spiced Indian milk tea' }
   ]
 };
+
+// Get full menu
+app.get('/menu', (req, res) => {
+  res.json({
+    restaurant: 'Flavors of India',
+    timestamp: new Date().toISOString(),
+    menu: menu,
+    status: 'open'
+  });
+});
