@@ -185,6 +185,11 @@ app.post('/reviews', (req, res) => {
   res.status(201).json({ message: 'Review submitted successfully', review });
 });
 
+// Get reviews
+app.get('/reviews', (req, res) => {
+  res.json({ reviews });
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
