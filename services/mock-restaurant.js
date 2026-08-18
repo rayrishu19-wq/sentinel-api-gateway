@@ -19,7 +19,7 @@ const tables = [
 ];
 const bookings = [];
 const orders = [];
-
+const reviews = [];
 
 const menu = {
   appetizers: [
