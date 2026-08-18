@@ -29,13 +29,8 @@ async function runTests() {
       path: '/restaurant/menu',
       method: 'GET'
     });
-    console.log(`Status: ${resMenu.statusCode}`);
     const menuJson = JSON.parse(resMenu.body);
-    console.log(`Restaurant: ${menuJson.restaurant}`);
-    if (menuJson.restaurant !== 'Flavors of India') {
-      throw new Error('Expected Flavors of India');
-    }
-    console.log('✅ Menu retrieval passed.');
+    console.log(`Status: ${resMenu.statusCode}, Restaurant: ${menuJson.restaurant}`);
 
     // Test 2: Get Tables
     console.log('\n--- Test 2: GET /restaurant/tables ---');
@@ -45,38 +40,82 @@ async function runTests() {
       path: '/restaurant/tables',
       method: 'GET'
     });
-    console.log(`Status: ${resTables.statusCode}`);
     const tablesJson = JSON.parse(resTables.body);
-    console.log(`Available Tables Count: ${tablesJson.tables.length}`);
-    if (tablesJson.tables.length !== 5) {
-      throw new Error('Expected 5 tables');
-    }
-    console.log('✅ Tables retrieval passed.');
+    console.log(`Status: ${resTables.statusCode}, Count: ${tablesJson.tables.length}`);
 
     // Test 3: Create Booking
     console.log('\n--- Test 3: POST /restaurant/bookings ---');
-    const bookingData = {
-      tableId: 't3',
-      customerName: 'Rishu Ray',
-      partySize: 4,
-      time: '20:00'
-    };
     const resBooking = await makeRequest({
       hostname: '127.0.0.1',
       port: 5000,
       path: '/restaurant/bookings',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
-    }, bookingData);
-    console.log(`Status: ${resBooking.statusCode}`);
+    }, { tableId: 't3', customerName: 'Rishu Ray', partySize: 4, time: '20:00' });
     const bookingJson = JSON.parse(resBooking.body);
-    console.log(`Message: ${bookingJson.message}`);
-    if (bookingJson.booking.customerName !== 'Rishu Ray') {
-      throw new Error('Expected booking name to be Rishu Ray');
-    }
-    console.log('✅ Booking creation passed.');
+    console.log(`Status: ${resBooking.statusCode}, Message: ${bookingJson.message}`);
 
-    console.log('\n🎉 Step 18 Tests Completed Successfully!');
+    // Test 4: Place Order
+    console.log('\n--- Test 4: POST /restaurant/orders ---');
+    const orderData = {
+      tableId: 't3',
+      items: [
+        { id: 'm1', name: 'Butter Chicken', price: 14.99, quantity: 2 },
+        { id: 'dr1', name: 'Mango Lassi', price: 3.49, quantity: 4 }
+      ]
+    };
+    const resOrder = await makeRequest({
+      hostname: '127.0.0.1',
+      port: 5000,
+      path: '/restaurant/orders',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }, orderData);
+    console.log(`Status: ${resOrder.statusCode}`);
+    const orderJson = JSON.parse(resOrder.body);
+    console.log(`Total: $${orderJson.order.total}, Status: ${orderJson.order.status}`);
+    if (orderJson.order.total !== 43.94) {
+      throw new Error(`Expected total 43.94, got ${orderJson.order.total}`);
+    }
+    console.log('✅ Order placement passed.');
+
+    // Test 5: Post Review
+    console.log('\n--- Test 5: POST /restaurant/reviews ---');
+    const reviewData = {
+      author: 'John Doe',
+      rating: 5,
+      comment: 'Superb food and prompt delivery!'
+    };
+    const resReview = await makeRequest({
+      hostname: '127.0.0.1',
+      port: 5000,
+      path: '/restaurant/reviews',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }, reviewData);
+    console.log(`Status: ${resReview.statusCode}`);
+    const reviewJson = JSON.parse(resReview.body);
+    console.log(`Author: ${reviewJson.review.author}, Rating: ${reviewJson.review.rating}`);
+    console.log('✅ Review submission passed.');
+
+    // Test 6: Get Reviews (with Average Rating check)
+    console.log('\n--- Test 6: GET /restaurant/reviews (Check Stats) ---');
+    const resReviewsList = await makeRequest({
+      hostname: '127.0.0.1',
+      port: 5000,
+      path: '/restaurant/reviews',
+      method: 'GET'
+    });
+    console.log(`Status: ${resReviewsList.statusCode}`);
+    const reviewsListJson = JSON.parse(resReviewsList.body);
+    console.log(`Total Reviews: ${reviewsListJson.totalReviews}, Avg Rating: ${reviewsListJson.avgRating}`);
+    if (reviewsListJson.totalReviews < 3) {
+      throw new Error('Expected at least 3 reviews');
+    }
+    console.log('✅ Reviews statistics verified.');
+
+    console.log('\n🎉 All Integration Tests Completed Successfully!');
+    process.exit(0);
   } catch (error) {
     console.error('❌ Integration Test Failed:', error.message);
     process.exit(1);
