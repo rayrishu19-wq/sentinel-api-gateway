@@ -107,6 +107,18 @@ app.get('/bookings', (req, res) => {
   res.json({ bookings });
 });
 
+// Cancel booking
+app.delete('/bookings/:id', (req, res) => {
+  const id = req.params.id;
+  const index = bookings.findIndex(b => b.id === id);
+  if (index !== -1) {
+    bookings.splice(index, 1);
+    res.json({ message: `Booking ${id} canceled successfully` });
+  } else {
+    res.status(404).json({ error: 'Booking Not Found' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`🍲 Indian Restaurant Mock Service running on http://localhost:${PORT}`);
