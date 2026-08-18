@@ -10,7 +10,13 @@ app.use((req, res, next) => {
   next();
 });
 
-const tables = [];
+const tables = [
+  { id: 't1', number: 1, capacity: 2, occupied: false },
+  { id: 't2', number: 2, capacity: 2, occupied: false },
+  { id: 't3', number: 3, capacity: 4, occupied: false },
+  { id: 't4', number: 4, capacity: 4, occupied: false },
+  { id: 't5', number: 5, capacity: 6, occupied: false }
+];
 const bookings = [];
 
 
