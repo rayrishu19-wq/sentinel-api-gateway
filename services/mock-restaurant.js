@@ -19,7 +19,10 @@ const tables = [
 ];
 const bookings = [];
 const orders = [];
-const reviews = [];
+const reviews = [
+  { id: 'r1', author: 'Amit S.', rating: 5, comment: 'Absolutely delicious Butter Chicken!', date: new Date().toISOString() },
+  { id: 'r2', author: 'Priya K.', rating: 4, comment: 'Great Samosas, but service was a bit slow.', date: new Date().toISOString() }
+];
 
 const menu = {
   appetizers: [
