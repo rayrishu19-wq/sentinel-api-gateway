@@ -185,9 +185,17 @@ app.post('/reviews', (req, res) => {
   res.status(201).json({ message: 'Review submitted successfully', review });
 });
 
-// Get reviews
+// Get reviews with statistics
 app.get('/reviews', (req, res) => {
-  res.json({ reviews });
+  const totalReviews = reviews.length;
+  const avgRating = totalReviews > 0
+    ? parseFloat((reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews).toFixed(1))
+    : 0;
+  res.json({
+    totalReviews,
+    avgRating,
+    reviews
+  });
 });
 
 
