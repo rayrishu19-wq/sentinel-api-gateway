@@ -19,6 +19,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Register global metrics tracker middleware
+app.use(metricsMiddleware);
+
 // Enable CORS middleware
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
