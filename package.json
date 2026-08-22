@@ -7,7 +7,8 @@
     "start": "node src/gateway.js",
     "dev": "nodemon src/gateway.js",
     "service:users": "node services/mock-users.js",
-    "service:products": "node services/mock-products.js"
+    "service:products": "node services/mock-products.js",
+    "service:restaurant": "node services/mock-restaurant.js"
   },
   "keywords": [
     "api-gateway",
