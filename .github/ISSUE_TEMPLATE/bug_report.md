@@ -1,5 +1,5 @@
-﻿---
-name: ðŸ› Bug report
+---
+name: 🐛 Bug report
 about: Create a report to help us improve Sentinel
 title: '[BUG] '
 labels: bug
@@ -14,10 +14,10 @@ A clear and concise description of what the bug is.
 Steps to reproduce the behavior:
 1. Start Redis: ...
 2. Start mock services: 
-pm run service:users and 
-pm run service:products
+npm run service:users and 
+npm run service:products
 3. Start the gateway: 
-pm start
+npm start
 4. Send request: curl ...
 5. See error: ...
 

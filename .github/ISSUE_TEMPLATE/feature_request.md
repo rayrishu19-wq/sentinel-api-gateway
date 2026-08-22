@@ -1,5 +1,5 @@
-﻿---
-name: ðŸš€ Feature request
+---
+name: 🚀 Feature request
 about: Suggest an idea or enhancement for Sentinel
 title: '[FEATURE] '
 labels: enhancement
