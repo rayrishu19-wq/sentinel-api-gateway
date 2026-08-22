@@ -1,5 +1,5 @@
-﻿<!--
-Thanks for contributing to Sentinel! ðŸ›¡ï¸
+<!--
+Thanks for contributing to Sentinel! 🛡️
 Please ensure that your pull request conforms to the checklist below.
 -->
 
