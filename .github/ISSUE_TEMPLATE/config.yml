@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contribution Guidelines
+    url: https://github.com/rayrishu19-wq/sentinel-api-gateway/blob/main/CONTRIBUTING.md
+    about: Please read our contribution guidelines before opening an issue or submitting contributions.
