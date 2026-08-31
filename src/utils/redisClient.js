@@ -44,6 +44,17 @@ const mockRedis = {
       return 0; // Rate limited
     }
   },
+  async del(key) {
+    if (this.store[key] !== undefined) {
+      delete this.store[key];
+      return 1;
+    }
+    return 0;
+  },
+  async keys(pattern) {
+    const regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+    return Object.keys(this.store).filter(k => regex.test(k));
+  },
   on(event, callback) {
     console.log(`[Mock Redis] Listener registered for event: ${event}`);
   }

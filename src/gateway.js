@@ -5,7 +5,7 @@ const { createRateLimiter } = require('./middlewares/rateLimiter');
 const { metricsMiddleware, getMetrics } = require('./middlewares/metrics');
 const { checkCache } = require('./middlewares/cache');
 const { createProxy } = require('./middlewares/proxy');
-const { isUsingMock } = require('./utils/redisClient');
+const { isUsingMock, getRedisClient } = require('./utils/redisClient');
 const { validateConfig } = require('./utils/configValidator');
 
 const app = express();
@@ -133,6 +133,44 @@ Object.entries(config.services).forEach(([serviceName, serviceConfig]) => {
 app.get('/gateway/metrics', (req, res) => {
   res.json(getMetrics());
 });
+
+// Gateway Cache Invalidation Endpoint
+app.delete('/gateway/cache', async (req, res) => {
+  const { service, key } = req.query;
+  const redisClient = getRedisClient();
+
+  try {
+    if (key) {
+      const deleted = await redisClient.del(key);
+      return res.status(200).json({
+        message: `Cache key '${key}' deleted.`,
+        deletedCount: deleted
+      });
+    }
+
+    const pattern = service ? `cache:${service}:*` : 'cache:*';
+    const keys = await redisClient.keys(pattern);
+    let deletedCount = 0;
+    
+    if (keys && keys.length > 0) {
+      for (const k of keys) {
+        deletedCount += await redisClient.del(k);
+      }
+    }
+
+    return res.status(200).json({
+      message: `Cleared cache for ${service ? `service '${service}'` : 'all services'}.`,
+      deletedCount
+    });
+  } catch (err) {
+    console.error('[Gateway] Cache clearing error:', err);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      message: 'Failed to clear gateway cache.'
+    });
+  }
+});
+
 
 // Global 404 handler for unmatched routes
 app.use((req, res) => {
