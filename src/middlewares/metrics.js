@@ -12,6 +12,14 @@ const metrics = {
   cacheMisses: 0
 };
 
+/**
+ * Express middleware that intercepts and aggregates operational metrics
+ * including request counters, response duration, HTTP status categories, and cache hit/misses.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next callback
+ */
 function metricsMiddleware(req, res, next) {
   metrics.totalRequests++;
   const start = Date.now();
