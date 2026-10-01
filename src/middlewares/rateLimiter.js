@@ -33,6 +33,15 @@ else
 end
 `;
 
+/**
+ * Factory function to create an atomic Token Bucket rate limiting middleware.
+ * 
+ * @param {string} serviceName - Unique identifier for the microservice route (e.g. 'users', 'products')
+ * @param {Object} rules - Rate limit rule configuration
+ * @param {number} rules.limit - Max number of requests (bucket token capacity)
+ * @param {number} rules.windowMs - Sliding window duration in milliseconds
+ * @returns {Function} Express middleware function (req, res, next)
+ */
 function createRateLimiter(serviceName, rules) {
   const { limit, windowMs } = rules;
   // Calculate refill rate in tokens per second
