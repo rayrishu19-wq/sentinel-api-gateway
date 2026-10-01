@@ -1,3 +1,16 @@
+/**
+ * Sentinel API Gateway - End-to-End Restaurant Service Integration Test Suite
+ * 
+ * Verifies gateway reverse proxying, request body serialization, response headers,
+ * caching headers, and downstream route handling across 6 automated stages:
+ * - Stage 1: GET Menu Catalog
+ * - Stage 2: GET Table Availability
+ * - Stage 3: POST Table Booking
+ * - Stage 4: POST Order Creation & Price Computation
+ * - Stage 5: POST Customer Review Submission
+ * - Stage 6: GET Aggregated Customer Reviews & Rating Statistics
+ */
+
 const http = require('http');
 
 console.log('🧪 Starting Sentinel API Gateway - Restaurant Service Integration Test...');
