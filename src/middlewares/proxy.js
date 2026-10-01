@@ -1,6 +1,16 @@
 const proxy = require('express-http-proxy');
 const { saveToCache } = require('./cache');
 
+/**
+ * Creates an HTTP reverse proxy middleware targeting an upstream microservice.
+ * 
+ * @param {string} serviceName - Downstream microservice identifier (e.g. 'users', 'restaurant')
+ * @param {Object} serviceConfig - Service configuration from gateway.json
+ * @param {string} serviceConfig.target - Target host URL (e.g. 'http://127.0.0.1:5001')
+ * @param {string} serviceConfig.prefix - Public path prefix mounted on the gateway (e.g. '/users')
+ * @param {Object} [serviceConfig.cache] - Cache configuration options
+ * @returns {Function} Express middleware function that forwards requests to upstream host
+ */
 function createProxy(serviceName, serviceConfig) {
   const { target, prefix, cache } = serviceConfig;
 
