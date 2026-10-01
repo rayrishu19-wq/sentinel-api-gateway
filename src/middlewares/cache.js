@@ -1,10 +1,21 @@
-const { getRedisClient } = require('../utils/redisClient');
-
+/**
+ * Generates a namespaced Redis cache key for a given service and URL.
+ * 
+ * @param {string} serviceName - Downstream microservice identifier
+ * @param {string} url - Original request URL including query parameters
+ * @returns {string} Fully qualified Redis cache key
+ */
 function getCacheKey(serviceName, url) {
   return `cache:${serviceName}:${url}`;
 }
 
-// Middleware to check if response is cached in Redis
+/**
+ * Middleware that checks Redis for an existing cached response for GET requests.
+ * 
+ * @param {string} serviceName - Downstream microservice identifier
+ * @param {Object} cacheConfig - Route cache configuration (e.g. { ttlSec: 60 })
+ * @returns {Function} Express middleware function (req, res, next)
+ */
 function checkCache(serviceName, cacheConfig) {
   return async (req, res, next) => {
     // Only cache GET requests
