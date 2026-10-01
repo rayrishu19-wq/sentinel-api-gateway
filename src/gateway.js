@@ -1,6 +1,21 @@
+/**
+ * Sentinel API Gateway Core Orchestrator
+ * 
+ * Pipeline Execution Flow:
+ * 1. Correlation ID Generator (X-Request-ID)
+ * 2. Prometheus/Telemetry Metrics Middleware
+ * 3. CORS & OPTIONS Pre-flight Handler
+ * 4. File-based Access Logger (logs/access.log)
+ * 5. High-precision Latency Tracker (X-Response-Time)
+ * 6. Dynamic Microservice Route Mounting (Rate Limiter -> Cache -> Proxy)
+ * 7. System Admin Endpoints (/health, /gateway/metrics, /gateway/cache)
+ * 8. Fallback 404 Route Handler
+ */
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { createRateLimiter } = require('./middlewares/rateLimiter');
 const { metricsMiddleware, getMetrics } = require('./middlewares/metrics');
 const { checkCache } = require('./middlewares/cache');
@@ -9,9 +24,8 @@ const { isUsingMock, getRedisClient } = require('./utils/redisClient');
 const { validateConfig } = require('./utils/configValidator');
 
 const app = express();
-const crypto = require('crypto');
 
-// Correlation ID middleware
+// 1. Correlation ID middleware: attaches unique request trace ID
 app.use((req, res, next) => {
   const reqId = req.headers['x-request-id'] || crypto.randomUUID();
   req.id = reqId;
